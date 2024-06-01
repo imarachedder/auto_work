@@ -1,0 +1,9 @@
+для начала работы с программой необзодимо выполнить следующие шаги:
+Требование: Наличие python 3.11.5, добавленный в PATH.
+	    Внести изменения в файл settings_barkov.txt и orderfull.txt при необходимости 
+
+1. открыть терминал
+2. пройти в каталог с директорией скриптов - cd C:/..../project
+3. python.exe -m pip install --upgrade pip
+4.  pip install -r requirements.txt
+5. python.exe main.py
