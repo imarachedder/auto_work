@@ -172,7 +172,7 @@ def parseBarkov():
                     pass
         new_item = sorted(item, key=lambda x: int(x[9]), reverse=True)
         new_item = new_item[:100]
-        with open(rf"Готовые файлы/{key}.csv", mode="w", encoding='utf-8-sig') as w_file:
+        with open(rf"Готовые файлы/{str(key).lower()}.csv", mode="w", encoding='utf-8-sig') as w_file:
             file_writer = csv.writer(w_file, delimiter=";", lineterminator="\r")
             file_writer.writerow(
                 'ССЫЛКА НА ЗАПИСЬ;ССЫЛКА НА ЗАПИСЬ С УЧЁТОМ ВЛАДЕЛЬЦА;ВЛАДЕЛЕЦ СТЕНЫ;АВТОР ЗАПИСИ;ДАТА И ВРЕМЯ;ТЕКСТ ПОСТА;ЛАЙКОВ;РЕПОСТОВ;КОММЕНТАРИЕВ;ПРОСМОТРОВ;ССЫЛКА НА КОММЕНТАРИЙ;НАЗВАНИЕ АВТОРА;ПОДПИСЧИКОВ'.split(
