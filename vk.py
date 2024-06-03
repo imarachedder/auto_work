@@ -52,10 +52,13 @@ def start_acc_post(acc, com, urls, datas):  # разбиваем работу а
             #print(completion)
             # обращение к ChatGTP
         #print(f"[{datetime.datetime.now().strftime('%H-%M-%S')}] Вызов функции отправки")
-        send_comment(acc[0], completion.choices[0].message.content, user_id, post_id,
-                     url[0], com)  # Оставляем комментарий
-        #except Exception as ex:
-            #print(f"[{datetime.datetime.now().strftime('%H-%M-%S')}] f{ex} вввв")
+        try:
+            send_comment(acc[0], completion.choices[0].message.content, user_id, post_id,
+                         url[0], com)  # Оставляем комментарий
+        except Exception as ex:
+            print(f"[{datetime.datetime.now().strftime('%H-%M-%S')}] {ex} ")
+            print("Перееходим к следующему файлу")
+            raise
         if '-' not in acc[-1]:
             time.sleep(int(acc[-1]))
         else:
@@ -76,7 +79,7 @@ def send_comment(acc, comment_text, user_id, post_id, url, com):  # чтобы �
             com.append(url)
     except vk_api.exceptions.ApiError as e:
         print(f"[{datetime.datetime.now().strftime('%H-%M-%S')}]Ошибка отправки комментария для {url}:", e)
-
+        raise
 
 def vk_posting(dir, file_name):
     os.chdir(dir)
@@ -202,10 +205,11 @@ def vk_posting(dir, file_name):
 
     data = []
 
-    with open('order.txt', 'r', encoding='utf8') as file:  # считываем информацию про аккаунты
+    with open('order.txt', 'r', encoding='utf-8') as file:  # считываем информацию про аккаунты
         for line in file.read().split('\n'):
             data.append(line.split(':'))
 
+    print("sdsdsdsdsdd")
     with open('proxy.list', 'a+', encoding='utf-8') as f:
         proxies = f.read().strip().split("\n")
 

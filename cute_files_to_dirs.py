@@ -2,25 +2,6 @@ import os
 import shutil
 import datetime
 
-
-# def archive():
-#     print("Добавляем ненужные файлы в архив")
-#     if not os.path.exists("Архив просмотры"):
-#         os.makedirs("Архив просмотры")
-#
-#     if not os.path.exists("Архив статус аккаунтов"):
-#         os.makedirs("Архив статус аккаунтов")
-#     for file in os.listdir():
-#         if os.path.isfile(file):
-#             if 'просмотры' in file:
-#                 shutil.move(file, 'Архив просмотры')
-#             elif 'Статус аккаунтов' in file:
-#                 shutil.move(file, 'Архив статус аккаунтов')
-#
-#     print("Файлы успешно перемещены")
-
-
-
 def archive():
     print("Добавляем ненужные файлы в архив")
 
@@ -58,4 +39,4 @@ def archive():
 
 
 # Пример вызова функции
-archive()
+# archive()
