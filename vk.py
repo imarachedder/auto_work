@@ -57,8 +57,7 @@ def start_acc_post(acc, com, urls, datas):  # разбиваем работу а
                          url[0], com)  # Оставляем комментарий
         except Exception as ex:
             print(f"[{datetime.datetime.now().strftime('%H-%M-%S')}] {ex} ")
-            print("Перееходим к следующему файлу")
-            raise
+
         if '-' not in acc[-1]:
             time.sleep(int(acc[-1]))
         else:
@@ -78,9 +77,12 @@ def send_comment(acc, comment_text, user_id, post_id, url, com):  # чтобы �
         if url not in com:
             com.append(url)
     except vk_api.exceptions.ApiError as e:
-        print(f"[{datetime.datetime.now().strftime('%H-%M-%S')}]Ошибка отправки комментария для {url}:", e)
-        raise
-
+        if e.code == 213:
+            print(f"[{datetime.datetime.now().strftime('%H-%M-%S')}]Ошибка отправки комментария для {url}:", e)
+        else:
+            print(f"[{datetime.datetime.now().strftime('%H-%M-%S')}]Ошибка отправки комментария для {url}:", e)
+            print("Переходим к следующему этапу")
+            raise
 def vk_posting(dir, file_name):
     os.chdir(dir)
     with open("comments.txt", 'r', encoding='utf8') as file:  # считываем готовые ссылки на посты
@@ -205,7 +207,7 @@ def vk_posting(dir, file_name):
 
     data = []
 
-    with open('order.txt', 'r', encoding='utf-8') as file:  # считываем информацию про аккаунты
+    with open('order.txt', 'r') as file:  # считываем информацию про аккаунты
         for line in file.read().split('\n'):
             data.append(line.split(':'))
 
@@ -215,9 +217,9 @@ def vk_posting(dir, file_name):
 
 
     acc = []
-    print(data)
+    # print(data)
     for i in data:  # подключаемся к аккаунтам
-        print(i[1])
+        # print(i[1])
         try:
             if len(proxies):
                 rq_session = requests.Session()
@@ -263,7 +265,7 @@ def vk_posting(dir, file_name):
 
     print(f"[{datetime.datetime.now().strftime('%H-%M-%S')}] Начинаем постить")
     threads = []
-    print(acc)
+    # print(acc)
     for ac in acc:
         thread = threading.Thread(target=start_acc_post, args=(ac, com, urls, datas), daemon=True)  # каждый аккаунт будет работать в потоке
         threads.append(thread)
